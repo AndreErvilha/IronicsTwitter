@@ -21,7 +21,7 @@ class SplashScreen extends StatelessWidget {
                 children: [
                   Image.asset('images/twitter_logo.png'),
                   SizedBox(height: 5),
-                  Text('Ironic Tweets',
+                  Text('Ironics Tweets',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
                 ],
