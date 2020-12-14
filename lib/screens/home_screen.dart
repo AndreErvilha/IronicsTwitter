@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ironic_tweets_andre_ervilha/blocs/home_bloc.dart';
 import 'package:ironic_tweets_andre_ervilha/utils/colors.dart';
@@ -11,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final HomeBloc bloc = HomeBloc();
 
-  final twitter = TextEditingController(text: 'realDonaldTrump');
+  final twitter = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // buildTextField(controller: twitter),
+              buildTextField(controller: twitter),
               RaisedButton(
                 onPressed: () {
-                  bloc.getTweets(twitter.text);
+                  bloc.getTweets();
                 },
                 color: primaryColor,
                 child: Text('Listar Tweets',
@@ -94,11 +95,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(message))),
       );
 
-  TextField buildTextField({TextEditingController controller}) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-          isDense: true, prefix: Text('@'), border: OutlineInputBorder()),
-    );
+  Widget buildTextField({TextEditingController controller}) {
+    return Row(children: [
+      Expanded(
+        child: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            isDense: true,
+            hintText: 'pesquisar por palavra',
+            border: OutlineInputBorder(),
+          ),
+        ),
+      ),
+      InkWell(
+          child: Container(
+            padding: EdgeInsets.all(8),
+            decoration:
+                BoxDecoration(color: primaryColor, shape: BoxShape.circle),
+            child: Icon(Icons.search, size: 30),
+          ),
+          onTap: () {
+            bloc.setFilter(twitter.text);
+          })
+    ]);
   }
 }

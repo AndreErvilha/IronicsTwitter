@@ -12,9 +12,9 @@ class Api {
     dio.options = BaseOptions(headers: {'Authorization': 'bearer $bearer'});
   }
 
-  Future<List> getTweets(String user) async {
+  Future<List> getTweets() async {
     Response response = await dio.get(
-        'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${user}&count=15');
+        'https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=realDonaldTrump&count=15');
 
     return response.data;
   }

@@ -9,8 +9,16 @@ class HomeBloc extends BlocBase{
   BehaviorSubject<List> _tweets = BehaviorSubject<List>();
   Stream<List> get tweets => _tweets.stream;
 
-  Future<void> getTweets(String user)async{
-    _tweets.sink.add(await _api.getTweets(user));
+  Future<void> getTweets()async{
+    _tweets.sink.add(null);
+    print('getTweets');
+    _tweets.sink.add(await _api.getTweets());
+  }
+
+  Future<void> setFilter(String text)async{
+    print('setFilter');
+    List result = await _api.getTweets();
+    _tweets.sink.add(result.where((element) => element['text'].toString().contains(text)).toList());
   }
 
   @override
